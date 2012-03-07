@@ -11,9 +11,6 @@ caop_continente_mapping = {
     'municipio' : 'MUNICIPIO',
     'distrito' : 'DISTRITO',
     'geometry' : 'MULTIPOLYGON',
-    #'taa' : 'TAA',
-    #'area_ea_ha' : 'AREA_EA_HA',
-    #'area_t_ha' : 'AREA_T_HA',
 }
 
 caop_continente_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
@@ -22,5 +19,6 @@ caop_continente_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
 def run(verbose=True):
     lm = LayerMapping(CAOPContinente, caop_continente_shp, 
                       caop_continente_mapping, transform=False,
-                      encoding='iso-8859-1')
+                      #encoding='iso-8859-1')
+                      encoding='utf-8')
     lm.save(strict=True, verbose=verbose)

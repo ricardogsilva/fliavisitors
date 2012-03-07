@@ -5,12 +5,9 @@ class CAOPContinente(models.Model):
     freguesia = models.CharField(max_length=255)
     municipio = models.CharField(max_length=255)
     distrito = models.CharField(max_length=255)
-    #taa = models.CharField(max_length=255)
-    #area_ea_ha = models.FloatField()
-    #area_t_ha = models.FloatField()
-
     geometry = models.MultiPolygonField()
     objects = models.GeoManager()
+    visitors = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.freguesia
