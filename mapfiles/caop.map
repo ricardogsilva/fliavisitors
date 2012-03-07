@@ -1,0 +1,46 @@
+MAP
+    SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
+    NAME 'testing'
+    PROJECTION
+        'init=epsg:4326'
+    END
+    WEB
+        METADATA
+            'wms_title' 'CAOP continente (local)'
+            'wms_onlineresource' 'http://localhost/cgi-bin/g2?'
+            'wms_srs' 'EPSG:4326'
+            'wms_enable_request' '*'
+        END
+    END
+    IMAGETYPE PNG
+    EXTENT -9.517029 36.961710 -6.189159 42.154311
+    SIZE 800 600
+    IMAGECOLOR 0 0 0
+    LAYER
+        NAME 'continente'
+        STATUS OFF
+        TEMPLATE 'template/blank.html'
+        DUMP TRUE
+        PROJECTION
+            'init=epsg:4326'
+        END
+        METADATA
+            'wms_title' 'continente'
+            'wms_srs' 'EPSG:4326'
+            'wms_enable_request' '*'
+            'wms_include_items' 'all'
+            'gml_include_items' 'all'
+        END
+        CONNECTIONTYPE OGR
+        CONNECTION 'geodjango.db'
+        DATA 'collectvisitors_caopcontinente'
+        #DATA 'collectvisitors/data/caop_continente'
+        TYPE POLYGON
+        CLASS
+            NAME 'freguesias'
+            STYLE
+                COLOR 255 255 120
+            END
+        END
+    END
+END
