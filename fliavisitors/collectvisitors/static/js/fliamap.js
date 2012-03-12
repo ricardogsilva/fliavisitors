@@ -22,22 +22,31 @@ $(document).ready(function() {
         queryVisible: true,
         eventListeners: {
             getfeatureinfo: function(evt) {
-		$.get("xhr/" + map.getLonLatFromPixel(evt.xy).lon + "/" + map.getLonLatFromPixel(evt.xy).lat + "/", function(data) {
-			alert(data);
-		});
-                map.addPopup(
-                    new OpenLayers.Popup.FramedCloud(
-                        'chicken',
-                        map.getLonLatFromPixel(evt.xy),
-                        null,
-                        //map.getLonLatFromPixel(evt.xy),
-                        '<strong>type:</strong> ' + evt.type + '<br /><strong>coords:</strong>' + map.getLonLatFromPixel(evt.xy) + '<br /><strong>text:</strong>' + evt.text,
-                        //evt.text,
-                        null,
+                var lon = map.getLonLatFromPixel(evt.xy).lon;
+                var lat = map.getLonLatFromPixel(evt.xy).lat;
+                var ajaxURL = "xhr/" + lon + "/" + lat + "/";
+                $.getJSON(ajaxURL, function(data) {
+                    /*
+                    var result = "";
+                    for(var i in data[0]) {
+                        result += i + " = " + data[0][i] + "\n";
+                    };
+                    alert(result);
+                    */
+                    map.addPopup(
+                        new OpenLayers.Popup.FramedCloud(
+                            'chicken',
+                            map.getLonLatFromPixel(evt.xy),
+                            null,
+                            //map.getLonLatFromPixel(evt.xy),
+                            data[0]["fields"]["freguesia"] + "<br />visitantes: " + data[0]["fields"]["visitors"],
+                            //evt.text,
+                            null,
+                            true
+                        ),
                         true
-                    ),
-                    true
-                );
+                    );
+                });
             }
         }
     });
