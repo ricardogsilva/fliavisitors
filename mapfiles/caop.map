@@ -1,45 +1,154 @@
 MAP
     SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
-    NAME 'Portugal Unidades Administrativas'
+    NAME 'Portugal_Unidades_Administrativas'
     PROJECTION
         'init=epsg:4326'
     END
+    FONTSET '/home/ricardo/dev/fliavisitors/fonts/font.list'
     WEB
         METADATA
-            'wms_title' 'Portugal Unidades Administrativas'
+            'wms_title' 'Portugal_Unidades_Administrativas'
             'wms_onlineresource' 'http://localhost/cgi-bin/g2?'
             'wms_srs' 'EPSG:4326'
             'wms_enable_request' '*'
+            'ows_schemas_location' 'http://schemas.opengis.net/'
+            'wms_feature_info_mime_type' 'text/html'
         END
     END
     IMAGETYPE PNG
     EXTENT -9.517029 36.961710 -6.189159 42.154311
     SIZE 800 600
-    IMAGECOLOR 0 0 0
+    IMAGECOLOR 255 255 255
     LAYER
-        NAME 'continente'
+        NAME 'distritos'
         STATUS OFF
-        TEMPLATE 'template/blank.html'
+        TEMPLATE 'template/distritos.html'
+        HEADER 'template/header.html'
+        FOOTER 'template/footer.html'
         DUMP TRUE
         PROJECTION
             'init=epsg:4326'
         END
         METADATA
-            'wms_title' 'continente'
+            'wms_title' 'distritos'
             'wms_srs' 'EPSG:4326'
             'wms_enable_request' '*'
             'wms_include_items' 'all'
             'gml_include_items' 'all'
+            'wms_feature_info_mime_type' 'text/html'
         END
         #CONNECTIONTYPE OGR
         #CONNECTION 'geodjango.db'
         #DATA 'collectvisitors_caopcontinente'
-        DATA 'collectvisitors/data/caop_continente'
+        DATA 'collectvisitors/data/caop_continente/distritos'
         TYPE POLYGON
+        MINSCALEDENOM 500000
+        CLASSITEM 'DISTRITO'
+        LABELITEM 'DISTRITO'
+        LABELCACHE on
         CLASS
-            NAME 'freguesias'
+            LABEL
+                COLOR 0 0 0
+                OUTLINECOLOR 255 255 255
+                TYPE truetype
+                POSITION AUTO
+                SIZE 10
+                ENCODING 'UTF8'
+                FONT 'sans'
+                PARTIALS FALSE
+            END
             STYLE
                 COLOR 255 255 120
+                OUTLINECOLOR 0 0 0
+            END
+        END
+    END
+    LAYER
+        NAME 'municipios'
+        STATUS OFF
+        TEMPLATE 'template/municipios.html'
+        HEADER 'template/header.html'
+        FOOTER 'template/footer.html'
+        DUMP TRUE
+        PROJECTION
+            'init=epsg:4326'
+        END
+        METADATA
+            'wms_title' 'municipios'
+            'wms_srs' 'EPSG:4326'
+            'ows_enable_request' '*'
+            'wms_include_items' 'all'
+            'gml_include_items' 'all'
+            'wms_feature_info_mime_type' 'text/html'
+        END
+        #CONNECTIONTYPE OGR
+        #CONNECTION 'geodjango.db'
+        #DATA 'collectvisitors_caopcontinente'
+        DATA 'collectvisitors/data/caop_continente/municipios'
+        TYPE POLYGON
+        MAXSCALEDENOM 500000
+        MINSCALEDENOM 100000
+        CLASSITEM 'MUNICIPIO'
+        LABELITEM 'MUNICIPIO'
+        LABELCACHE on
+        CLASS
+            LABEL
+                COLOR 0 0 0
+                OUTLINECOLOR 255 255 255
+                TYPE truetype
+                POSITION AUTO
+                SIZE 10
+                ENCODING 'UTF8'
+                FONT 'sans'
+                PARTIALS FALSE
+            END
+            STYLE
+                COLOR 255 255 120
+                OUTLINECOLOR 0 0 0
+            END
+        END
+    END
+    LAYER
+        NAME 'freguesias'
+        STATUS OFF
+        TEMPLATE 'template/freguesias.html'
+        HEADER 'template/header.html'
+        FOOTER 'template/footer.html'
+        DUMP TRUE
+        PROJECTION
+            'init=epsg:4326'
+        END
+        METADATA
+            'wms_title' 'freguesias'
+            'wms_srs' 'EPSG:4326'
+            'ows_enable_request' '*'
+            'wms_include_items' 'all'
+            'gml_include_items' 'all'
+            'wms_feature_info_mime_type' 'text/html'
+        END
+        #CONNECTIONTYPE OGR
+        #CONNECTION 'geodjango.db'
+        #DATA 'collectvisitors_caopcontinente'
+        DATA 'collectvisitors/data/caop_continente/freguesias'
+        TYPE POLYGON
+        MAXSCALEDENOM 100000
+        CLASSITEM 'FREGUESIA'
+        LABELITEM 'FREGUESIA'
+        LABELCACHE on
+        CLASS
+            LABEL
+                COLOR 0 0 0
+                OUTLINECOLOR 255 255 255
+                TYPE truetype
+                POSITION AUTO
+                SIZE 8
+                ENCODING 'UTF8'
+                FONT 'sans'
+                PARTIALS FALSE
+            END
+            STYLE
+                COLOR 255 255 120
+                OUTLINECOLOR 0 0 0
             END
         END
     END

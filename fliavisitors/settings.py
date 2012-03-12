@@ -2,6 +2,8 @@
 import os
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
+PROXY_DOMAIN = 'localhost'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -112,11 +114,12 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.request",
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
 )
 
 INSTALLED_APPS = (
@@ -131,6 +134,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django.contrib.gis',
+    'httpproxy',
     'south',
     'collectvisitors',
 )
