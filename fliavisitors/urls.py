@@ -18,6 +18,6 @@ urlpatterns = patterns('',
     url(r'^visitantes/', include('collectvisitors.urls')),
 )
 
-urlpatterns += patterns('',
-    (r'^(?P<url>.*)$', 'httpproxy.views.proxy'),
-)
+#urlpatterns += patterns('',
+#    (r'^(?P<url>.*)$', 'httpproxy.views.proxy'),
+#)

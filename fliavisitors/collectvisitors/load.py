@@ -14,7 +14,7 @@ caop_continente_mapping = {
 }
 
 caop_continente_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                      'data/caop_continente.shp'))
+                                      'data/caop_continente/freguesias.shp'))
 
 def run(verbose=True):
     lm = LayerMapping(CAOPContinente, caop_continente_shp, 
