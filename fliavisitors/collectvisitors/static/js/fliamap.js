@@ -22,6 +22,9 @@ $(document).ready(function() {
         queryVisible: true,
         eventListeners: {
             getfeatureinfo: function(evt) {
+		$.get("xhr/" + map.getLonLatFromPixel(evt.xy).lon + "/" + map.getLonLatFromPixel(evt.xy).lat + "/", function(data) {
+			alert(data);
+		});
                 map.addPopup(
                     new OpenLayers.Popup.FramedCloud(
                         'chicken',
