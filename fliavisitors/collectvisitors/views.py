@@ -14,10 +14,11 @@ def index(request):
 def xhr_vote_popup(request, lon, lat):
     p = Point(float(lon), float(lat))
     freguesia = CAOPContinente.objects.get(geometry__intersects=p)
+    print("xhr_vote_popup: request.method: %s" % request.method)
     if request.method == 'POST':
         form = VoteForm(request.POST)
         if form.is_valid():
-            num_visitors = form.cleaned_data['visitors']
+            num_visitors = form.cleaned_data['adicionar_visitantes']
             freguesia.visitors += int(num_visitors)
             freguesia.save()
             result = HttpResponseRedirect(
@@ -39,6 +40,7 @@ def xhr_vote_popup(request, lon, lat):
                     context_instance=RequestContext(request)
                  )
     return result
+
 def xhr_freguesia(request, lon, lat):
     '''
     Return selected freguesia in JSON format.
@@ -70,19 +72,19 @@ def xhr_top_visitors(request):
 
 def xhr_vote(request, freg_id):
     freg_id = int(freg_id)
-    print("request.method: %s" % request.method)
+    freguesia = CAOPContinente.objects.get(pk=freg_id)
+    print("xhr_vote: request.method: %s" % request.method)
     if request.method == 'POST':
         form = VoteForm(request.POST)
         if form.is_valid():
             #freg_id = form.cleaned_data['freguesia']
-            num_visitors = form.cleaned_data['visitors']
-            freguesia = CAOPContinente.objects.get(pk=freg_id)
+            num_visitors = form.cleaned_data['adicionar_visitantes']
             freguesia.visitors += int(num_visitors)
             freguesia.save()
             result = HttpResponseRedirect(
                         #reverse('collectvisitors.views.xhr_vote_ok'), 
-                        #reverse('collectvisitors-vote_ok', args=(freg_id,))
-                        reverse('collectvisitors-vote', args=(freg_id,))
+                        reverse('collectvisitors-vote_ok', args=(freg_id,))
+                        #reverse('collectvisitors-vote', args=(freg_id,))
                      )
         else:
             form = VoteForm()
@@ -95,15 +97,16 @@ def xhr_vote(request, freg_id):
         form = VoteForm()
         result = render_to_response(
                     'collectvisitors/voteform.html',
-                    {'form' : form}, 
+                    {'form' : form, 'freguesia' : freguesia}, 
                     context_instance=RequestContext(request)
                  )
     return result
 
 def xhr_vote_ok(request, freg_id):
-    mimetype = 'application/javascript'
     freguesia = CAOPContinente.objects.filter(pk=freg_id)
-    data = serializers.serialize('json', freguesia, ensure_ascii=False,
-                                 fields=('freguesia', 'visitors'))
-    result = HttpResponse(data, mimetype)
+    result = render_to_response(
+                'collectvisitors/voteok.html',
+                {'freguesia' : freguesia}, 
+                context_instance=RequestContext(request)
+             )
     return result

@@ -1,4 +1,6 @@
-<p><strong>{{ freguesia.freguesia}}</strong></p>
+<h2>{{ freguesia.freguesia}}</h2>
+<p><em>Município: {{ freguesia.municipio}}</em></p>
+<p><em>Distrito: {{ freguesia.distrito}}</em></p>
 <p>visitantes: {{ freguesia.visitors}}<p>
 <form action="" method="post" id="vote">{% csrf_token %}
     {{ form.as_p }}

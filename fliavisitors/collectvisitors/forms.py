@@ -7,4 +7,4 @@ class VoteForm(forms.Form):
                           range(minVisitor, maxVisitor+1))
     #freguesia = forms.integerField()
     #visitors = forms.integerField(initial=1, max_value=50, min_value=1)
-    visitors = forms.ChoiceField(choices=VISITOR_CHOICES, initial=(1, 1))
+    adicionar_visitantes = forms.ChoiceField(choices=VISITOR_CHOICES, initial=(1, 1))
