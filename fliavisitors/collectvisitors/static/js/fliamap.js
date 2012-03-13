@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    //OpenLayers.ProxyHost = "/cgi-bin/proxy_ol.cgi?url=";
     var map = new OpenLayers.Map(
         'tabs-mapa',
         {maxExtent: new OpenLayers.Bounds(-9.517029, 36.961710, -6.189159, 42.154311)}
@@ -25,27 +24,38 @@ $(document).ready(function() {
                 var lon = map.getLonLatFromPixel(evt.xy).lon;
                 var lat = map.getLonLatFromPixel(evt.xy).lat;
                 var ajaxURL = "xhr/" + lon + "/" + lat + "/";
-                $.getJSON(ajaxURL, function(data) {
-                    /*
-                    var result = "";
-                    for(var i in data[0]) {
-                        result += i + " = " + data[0][i] + "\n";
-                    };
-                    alert(result);
-                    */
-                    map.addPopup(
+                $.get(ajaxURL, function(data) {
+                    var pp = map.addPopup(
                         new OpenLayers.Popup.FramedCloud(
                             'chicken',
                             map.getLonLatFromPixel(evt.xy),
                             null,
                             //map.getLonLatFromPixel(evt.xy),
-                            data[0]["fields"]["freguesia"] + "<br />visitantes: " + data[0]["fields"]["visitors"],
+                            //data[0]["fields"]["freguesia"] + "<br />visitantes: " + data[0]["fields"]["visitors"],
+                            data,
                             //evt.text,
                             null,
                             true
                         ),
                         true
                     );
+
+                    $("#submit_btn").click(function() {
+                        var freg_id = $("#hidden_freg_pk").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "xhr/" + freg_id + "/vote/",
+                            data: $("#vote").serialize(),
+                            success: function(data) {
+                                /*
+                                alert("Voto contabilizado!"); 
+                                */
+                                alert(data);
+                                pp["contentHTML"] = data;
+                            }
+                        });
+                    });
+
                 });
             }
         }

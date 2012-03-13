@@ -1,12 +1,12 @@
 MAP
-    #SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
-    SHAPEPATH '/home/geo2/dev/fliavisitors/fliavisitors'
+    SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
+    #SHAPEPATH '/home/geo2/dev/fliavisitors/fliavisitors'
     NAME 'Portugal_Unidades_Administrativas'
     PROJECTION
         'init=epsg:4326'
     END
-    #FONTSET '/home/ricardo/dev/fliavisitors/fonts/font.list'
-    FONTSET '/home/geo2/dev/fliavisitors/fonts/font.list'
+    FONTSET '/home/ricardo/dev/fliavisitors/fonts/font.list'
+    #FONTSET '/home/geo2/dev/fliavisitors/fonts/font.list'
     WEB
         METADATA
             'wms_title' 'Portugal_Unidades_Administrativas'

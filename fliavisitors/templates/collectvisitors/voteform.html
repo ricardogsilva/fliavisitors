@@ -1,0 +1,7 @@
+<p><strong>{{ freguesia.freguesia}}</strong></p>
+<p>visitantes: {{ freguesia.visitors}}<p>
+<form action="" method="post" id="vote">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" value="{{ freguesia.pk }}" id="hidden_freg_pk" />
+    <input type="submit" value="Submeter" id="submit_btn" />
+</form>
