@@ -1,0 +1,3 @@
+- Edit the g2 file and edit the MS_MAPFILE variable to point to your mapfile, using abslute paths.
+- Copy the 'g2' file to your webserver's cgi-bin direcotry (/usr/lib/cgi-bin)
+- your mapserver URL will be http://yourserver/cgi-bin/g2
