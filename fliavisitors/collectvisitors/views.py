@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Point
 from models import CAOPContinente
 from forms import VoteForm
+from django.utils import simplejson
+from django.db.models import Sum
 
 def index(request):
     return render_to_response('collectvisitors/map.html',
@@ -61,13 +63,48 @@ def xhr_top_visitors(request):
     '''Return the five freguesias with most visitors.'''
 
     #if request.is_ajax():
-    mimetype = 'application/javascript'
+    mimetype = 'application/javascript; charset=utf8'
     freguesias = CAOPContinente.objects.order_by('-visitors')[:5]
-    data = serializers.serialize('json', freguesias, ensure_ascii=False, 
-                                 fields=('freguesia', 'visitors'))
+    #data = serializers.serialize('json', freguesias, ensure_ascii=False, 
+    #                             fields=('freguesia', 'visitors'))
+    d = dict()
+    for (i, f) in enumerate(freguesias):
+        d[f.freguesia] = (i, f.visitors)
+    data = simplejson.dumps(d)
     result = HttpResponse(data, mimetype)
     #else:
     #    result = HttpResponse(status=400)
+    return result
+
+def xhr_top_freguesias(request):
+    mimetype = 'application/javascript; charset=utf8'
+    freguesias = CAOPContinente.objects.order_by('-visitors')[:5]
+    d = dict()
+    for (i, f) in enumerate(freguesias):
+        d[f.freguesia] = (i, f.visitors)
+    data = simplejson.dumps(d)
+    result = HttpResponse(data, mimetype)
+    return result
+
+def xhr_top_distritos(request):
+    mimetype = 'application/javascript; charset=utf8'
+    top_distritos = CAOPContinente.objects.values('distrito').annotate(visitors=Sum('visitors')).order_by('-visitors')[:5]
+    distritos = dict()
+    for (i, d) in enumerate(top_distritos):
+        distritos[d['distrito']] = (i, d['visitors'])
+    data = simplejson.dumps(distritos)
+    result = HttpResponse(data, mimetype)
+    return result
+
+def xhr_top_municipios(request):
+    mimetype = 'application/javascript; charset=utf8'
+    top_municipios = CAOPContinente.objects.values('municipio').annotate(
+                        visitors=Sum('visitors')).order_by('-visitors')[:5]
+    municipios = dict()
+    for (i, m) in enumerate(top_municipios):
+        municipios[m['municipio']] = (i, m['visitors'])
+    data = simplejson.dumps(municipios)
+    result = HttpResponse(data, mimetype)
     return result
 
 def xhr_vote(request, freg_id):
@@ -103,10 +140,10 @@ def xhr_vote(request, freg_id):
     return result
 
 def xhr_vote_ok(request, freg_id):
-    freguesia = CAOPContinente.objects.filter(pk=freg_id)
+    freguesia = CAOPContinente.objects.get(pk=freg_id)
     result = render_to_response(
                 'collectvisitors/voteok.html',
-                {'freguesia' : freguesia}, 
+                {'freguesia' : freguesia,}, 
                 context_instance=RequestContext(request)
              )
     return result

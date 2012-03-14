@@ -13,16 +13,56 @@
     <script src="{{ STATIC_URL }}js/fliamap.js"></script>
 {% endblock %}
 {% block primary %}
-<h1>Futurália - Visitantes</h1>
+<h1>Futurália</h1>
+<h3>De onde vêm os nossos visitantes?</h3>
+<p>Participa num inquérito global aos visitantes do <em>stand</em> da INETE. Selecciona no mapa a tua freguesia de origem e escolhe o número de visitantes de acordo com o número de pessoas no teu grupo. Submete o número de visitantes e aprecia os resultados!</p>
 <div id="tabs">
     <ul>
         <li><a href="#tabs-mapa">Mapa</a></li>
-	<!--
-        <li><a href="#tabs-resultados">Resultados</a></li>
-	-->
-        <li><a href="#tabs-resultados">Resultados</a></li>
+        <li><a href="#tabs-resultados" id="resultados">Resultados</a></li>
+        <li><a href="#tabs-sobre">Sobre</a></li>
     </ul>
     <div id="tabs-mapa"></div>
-    <div id="tabs-resultados"></div>
+    <div id="tabs-resultados">
+        <div id="drill-down">
+            <form>
+                <div id="radio">
+                    <input type="radio" id="dis-radio" name="radio" /><label for="dis-radio">Distritos</label>
+                    <input type="radio" id="mun-radio" name="radio" /><label for="mun-radio">Municípios</label>
+                    <input type="radio" id="freg-radio" name="radio" /><label for="freg-radio">Freguesias</label>
+                </div>
+            </form>
+        </div>
+        <div id="chart-area"></div>
+    </div>
+    <div id="tabs-sobre">
+        <p>Esta aplicação exemplifica, de forma simples, o potencial dos Sistemas de Informação Geográfica.</p>
+        <p>Tecnologias utilizadas:<br />
+        <ul>
+            <li>
+                A interface gráfica é implementada utilizando HTML + CSS + Javascript, as linguagens da Web. São utilizadas as bibliotecas:<br />
+                <ul>
+                    <li><a href="http://jquery.com" target="_blank">JQuery</a></li>
+                    <li><a href="http://openlayers.org" target="_blank">OpenLayers</a></li>
+                    <li><a href="http://code.google.com/p/flot" target="_blank">flot</a></li>
+                </ul>
+            </li>
+            <li>
+            O mapa:<br />
+            <ul>
+                <li>Utiliza dados de base provenientes da <a href="http://www.igeo.pt/produtos/cadastro/caop/caop_vigor.htm" target="_blank">Carta Administrativa Oficial de Portugal</a>;</li>
+                <li>É disponibilizado através do standard <a href="http://www.opengeospatial.org/standards/wms" target="_blank">Web Map Service</a>.</li>
+                <li>É servido para a web utilizando a aplicação <a href="http://mapserver.org" target="_blank">MapServer</a>.</li>
+            </ul>
+            </li>
+            <li>
+                O servidor é composto por dois componentes:<br />
+                <ul>
+                    <li>Uma base de dados espacial <a href="http://www.gaia-gis.it/gaia-sins/" target="_blank">Spatialite</a>, que serve os dados ao servidor de mapas e permite o armazenamento do número de visitantes;</li>
+                    <li>A plataforma <a href="http://geodjango.org" target="_blank">Geodjango</a>, que fornece a um conjunto de funcionalidades adequadas ao à criação de aplicações web para informação geográfica.</li>
+                </ul></li>
+        </ul>
+        </p>
+    </div>
 </div>
 {% endblock %}

@@ -1,12 +1,12 @@
 MAP
-    #SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
-    SHAPEPATH '/home/geo2/dev/fliavisitors/fliavisitors'
+    SHAPEPATH '/home/ricardo/dev/fliavisitors/fliavisitors'
+    #SHAPEPATH '/home/geo2/dev/fliavisitors/fliavisitors'
     NAME 'Portugal_Unidades_Administrativas'
     PROJECTION
         'init=epsg:4326'
     END
-    #FONTSET '/home/ricardo/dev/fliavisitors/fonts/font.list'
-    FONTSET '/home/geo2/dev/fliavisitors/fonts/font.list'
+    FONTSET '/home/ricardo/dev/fliavisitors/fonts/font.list'
+    #FONTSET '/home/geo2/dev/fliavisitors/fonts/font.list'
     WEB
         METADATA
             'wms_title' 'Portugal_Unidades_Administrativas'
@@ -20,7 +20,8 @@ MAP
     IMAGETYPE PNG
     EXTENT -9.517029 36.961710 -6.189159 42.154311
     SIZE 800 600
-    IMAGECOLOR 255 255 255
+    #IMAGECOLOR 255 255 255
+    IMAGECOLOR 238 238 238
     LAYER
         NAME 'distritos'
         STATUS OFF

@@ -62,15 +62,51 @@ $(document).ready(function() {
     map.zoomToMaxExtent();
     $(function() {
         $("#tabs").tabs();
+        $("#radio").buttonset();
     });
-    $('#tabs').bind('tabsload', function(event, ui) {
-        var ajaxURL = "xhr/topvisitors/"
-        $.getJSON({
-            url: ajaxURL, 
-            success: loadChart(data)
+    $("#resultados").click(function() {
+        $("#dis-radio").click();
+    });
+
+    function show_counts(ajaxURL) {
+        $.getJSON(ajaxURL, function(data) {
+            var counter = 0;
+            var toPlot = [];
+            var theTicks = [];
+            for(var i in data) {
+                var thePosition = data[i][0];
+                var theValue = data[i][1];
+                var theLabel = i;
+                toPlot[thePosition] = {label: theLabel, data: [[thePosition, theValue]]};
+                theTicks[thePosition] = [thePosition, theLabel];
+                counter += 1;
+            }
+            var plotOptions = {
+                legend: {
+                    show: false
+                },
+                series: {
+                    lines: {show: false},
+                    points: {show: false},
+                    bars: {show: true, align: "center"}
+                },
+                xaxis: {
+                    ticks: theTicks
+                },
+                grid: {
+                    backgroundColor: {colors: ["#fff", "#fff"]}
+                }
+            };
+            $.plot("#chart-area", toPlot, plotOptions);
         });
-    });
-    function loadChart(chartData) {
-        alert(data);
     }
+    $("#dis-radio").click(function() {
+        show_counts("xhr/topdistritos/");
+    });
+    $("#mun-radio").click(function() {
+        show_counts("xhr/topmunicipios/");
+    });
+    $("#freg-radio").click(function() {
+        show_counts("xhr/topfreguesias/");
+    });
 })
